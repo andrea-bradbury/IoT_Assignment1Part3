@@ -20,9 +20,14 @@ db_filename = './data/monitor_data.db'
 
 def headings():
     print()
+    '''
     print(f'{"Name":<10}|{"Serial #":<18}|'
           f'{"MAC":<20}|{"Created at":<28}|'
           f'{"CPU Temp":>8}|{"GPU Temp":>8}|'
+          f'{"CPU Load":>8}'
+          f'')
+    '''
+    print( f'{"Created at":<38}|'
           f'{"CPU Load":>8}'
           f'')
 
@@ -53,13 +58,13 @@ def main(_delay):
         if counter % 10 == 0:
             headings()
         counter += 1
-
+        '''
         print(f'{last_readings.host_name:<10}|{last_readings.serial:<18}|'
               f'{last_readings.host_mac:^20}|{last_readings.created_at}  |'
               f'{last_readings.cpu_temp:>8.1f}|{last_readings.gpu_temp:>8.1f}|'
               f'{last_readings.load:>8.1f}'
               f'')
-
+        '''
         # Database SQLite
         db = Database('cpu_loads.db')
         db.create()
@@ -69,9 +74,6 @@ def main(_delay):
         print(f'{datetime.now()} CPU load = {load}')
 
         sleep(_delay)
-
-
-
 
 i=0
 if __name__ == '__main__':
