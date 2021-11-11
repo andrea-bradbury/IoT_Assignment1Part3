@@ -82,6 +82,11 @@ def cpu_load(qty=1):
 def cpu_load_latest():
     return cpu_load(1)
 
+'''
+@app.route ('/api/device-load')
+def device-load():
+    return 
+'''
 
 if __name__ == '__main__':
     app.run()
