@@ -18,6 +18,5 @@ def about():
 def chart_cpu():
     return render_template('chart-cpu.html')
 
-
 if __name__ == '__main__':
     app.run()
