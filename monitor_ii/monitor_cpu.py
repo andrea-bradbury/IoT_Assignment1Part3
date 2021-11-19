@@ -1,5 +1,6 @@
 from datetime import datetime
 from time import sleep
+from db2 import Database
 
 # import the ORM items
 from sqlalchemy import create_engine
@@ -58,6 +59,16 @@ def main(_delay):
               f'{last_readings.cpu_temp:>8.1f}|{last_readings.gpu_temp:>8.1f}|'
               f'{last_readings.load:>8.1f}'
               f'')
+
+        # Database SQLite
+        db = Database('cpu_loads.db')
+        db.create()
+
+        load = get_maximum_cpu_load()
+        db.store(load)
+        print(f'{datetime.now()} CPU load = {load}')
+
+        sleep(_delay)
 
         sleep(_delay)
 
