@@ -1,5 +1,10 @@
+import random
+import logging
+#import current as current
+#import self as self
+
 from flask import Flask, render_template, jsonify
-from db import CPU, Storage, Base
+from db import CPU, Storage, Base, EnvironmentalTPH
 from flask_cors import CORS
 
 from sqlalchemy import create_engine, select
@@ -52,6 +57,7 @@ def index():
     return render_template('index.html', statuses=statuses)
 
 
+
 @app.route('/about')
 def demo_template():
     return render_template('about.html')
@@ -89,31 +95,31 @@ def device_load():
 
 @app.route("/api/environment")
 def get_api_environment():
-    return {"error": "Route note implemented",
-            "temperature": None,
-            "pressure": None,
-            "humidity": None, }
+    current_enviro = get_api_temperature(), get_api_pressure(), get_api_humidity()
+    return {"Environment: ": current_enviro}
 
 @app.route("/api/temperature")
 def get_api_temperature():
-    return {"error": "Route note implemented",
-            "temperature": None,
-            "pressure": None,
-            "humidity": None, }
+    current_temp = EnvironmentalTPH().temperature
+    return {"Temperature": current_temp}
 
 @app.route("/api/pressure")
 def get_api_pressure():
-    return {"error": "Route note implemented",
-            "temperature": None,
-            "pressure": None,
-            "humidity": None, }
+    current_press = EnvironmentalTPH().temperature
+    return {"Pressure": current_press}
 
 @app.route("/api/humidity")
 def get_api_humidity():
-    return {"error": "Route note implemented",
-            "temperature": None,
-            "pressure": None,
-            "humidity": None, }
+    current_humidity = EnvironmentalTPH().humidity
+    return {"humidity": current_humidity}
+
+@app.route("/api/history")
+def temp_history():
+   #Creating placeholder data for 20 minutes
+    listOfTemps = ['read1:25', 'read2: 35','read2: 27','read4: 29','read5: 25',]
+
+    return {"History: ": listOfTemps}
+
 
 if __name__ == '__main__':
     app.run()

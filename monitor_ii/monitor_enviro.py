@@ -15,7 +15,6 @@ from mypi import \
     get_cpu_temp, get_gpu_temp, get_maximum_cpu_load
 
 
-
 db_filename = './data/monitor_data.db'
 
 
@@ -70,7 +69,6 @@ def main(_delay):
         print(f'{datetime.now()} CPU load = {load}')
 
         sleep(_delay)
-
 
 
 

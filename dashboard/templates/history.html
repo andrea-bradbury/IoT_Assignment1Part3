@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="static/css/app.css" type="text/css">
+<link rel="stylesheet" href="static/vendor/chartjs/css/Chart.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+<h1>History</h1>
+
+<div class="card-deck pb-4 mt-1">
+    <div class="card">
+        <h2 class="card-header">CPU Historical Data</h2>
+        <div class="card-body">
+            <canvas id="CPU-Line-Chart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+<script src="/static/vendor/chartjs/js/Chart.bundle.js"></script>
+<script src="/static/js/line-dynamic.js"></script>
+
+
+{% endblock %}

@@ -1,43 +1,102 @@
 //AJAX Request
 //Dynamically call and update data
-var lineDynamicUpdate = function() {
-     //URL
-    let url = 'http://127.0.0.1:5000/api/cpu-load';
 
-    //Method
-    let method = 'GET';
+//URL
+let url_lineDynamic = 'http://127.0.0.1:5000/api/cpu-load';
 
-    //Response type
-    let typeOfResponse = 'json';
+//Method
+let method_lineDynamic = 'GET';
+
+//Response type
+let typeOfResponse_5 = 'json';
 
 
-    //Create a new request
-    let xhr = new XMLHttpRequest();
+//Create a new request
+let xhr_lineDynamic = new XMLHttpRequest();
 
-    //Initialise the request
-    xhr.open(method, url);
+xhr_lineDynamic.onload = function() {
 
-    xhr.responseType = typeOfResponse;
+    //Graph
+    let lineChartCanvas1 = document.getElementById('CPU-Line-Chart')
 
-    //Send the request
-    xhr.send();
+    var lineData = {
+        labels: ["Load 1", "Load 2", "Load 3","Load 4", "Load 5", "Load 6" , "Load 7", "Load 8",
+        ],
+        datasets: [
+            {
+                label: 'CPU load',
+                line: '',
+                data: [35, 40, 55, 64, 44, 78, 80, 65],
+                borderWidth: 2,
+                lineTension: 0.2,
+                fill: false,
+                borderColor: [
+                    'rgba(128, 64, 65, 1)',
+                ],
+            },
+        ],
+    }
+
+    var lineOptions = {
+        legend: {display: false},
+        title: {
+            display: true,
+            text: 'CPU Load'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Time',
+                },
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Percentage',
+                },
+                ticks: {
+                    beginAtZero: true,
+                    suggestedMin: 0,
+                    suggestedMax: 100,
+                },
+            }],
+        },
+    }
+
+    var myDynamicLineChart = new Chart(lineChartCanvas1, {
+        type: 'line',
+        data: lineData,
+        options: lineOptions,
+    })
 }
 
+/*
 
 
+//Initialise the request
+xhr_lineDynamic.open(method_lineDynamic, url_lineDynamic);
+
+xhr_lineDynamic.responseType = typeOfResponse_5;
+
+//Send the request
+xhr_lineDynamic.send();
+
+var counter = 0
 //Load
-xhr.onLoad = function() {
+
+xhr_lineDynamic.onLoad = function() {
     let responseObj = xhr.response;
 
     for (let responseNumber in responseObj) {
         let dynamicData = responseObj[responseNumber]
-        myRandomLineChart.data.labels.unshift(dynamicData.created_at)
-        myRandomLineChart.data.datasets[0].data.unshift(dynamicData.load)
+        myRandomLineChart.data.labels.push(dynamicData.created_at)
+        myRandomLineChart.data.datasets[0].data.push(dynamicData.load)
         if (counter >25) {
-        myRandomLineChart.data.labels.pop()
-        myRandomLineChart.data.datasets[0].data.pop()
-        myRandomLineChart.update()
-        counter ++
+            myRandomLineChart.data.labels.pop()
+            myRandomLineChart.data.datasets[0].data.pop()
+            myRandomLineChart.update()
+            counter ++
         }
     }
 
@@ -45,11 +104,18 @@ xhr.onLoad = function() {
 
 setInterval(lineRandomUpdate, 5000);
 
+
+*/
+
+
 //Error
 xhr.onerror = function() {
     alert('Request Failed');
 };
 
+
+
+/*
 //Progress
 xhr.onprogress function(event) {
     if (event.lengthComputable) {
@@ -59,61 +125,14 @@ xhr.onprogress function(event) {
     }
 
 };
+*/
 
 
-let lineChartCanvas1 = document.getElementById('CPU-Chart')
-var lineData = {
-    datasets: [
-        {
-            label: 'Data',
-            line: '',
-            data: [0],
-            borderWidth: 2,
-            lineTension: 0.2,
-            fill: false,
-            borderColor: [
-                'rgba(128, 64, 65, 1)',
-            ],
-        },
-    ],
-}
 
-var lineOptions = {
-    legend: {display: false},
-    title: {
-        display: true,
-        text: 'CPU Load'
-    },
-    scales: {
-        xAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Time',
-            },
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Percentage',
-            },
-            ticks: {
-                beginAtZero: true,
-                suggestedMin: 0,
-                suggestedMax: 100,
-            },
-        }],
-    },
-}
-
-var myRandomLineChart = new Chart(lineChartCanvas1, {
-    type: 'line',
-    data: lineData,
-    options: lineOptions,
-})
 
 var z = new Ziggurat();
 
-var counter = 0
+
 var lineRandomUpdate = function () {
     var randomData = clamp(z.nextGaussian()*5,-5,10)
     myRandomLineChart.data.labels.push(counter)
@@ -126,4 +145,3 @@ var lineRandomUpdate = function () {
     counter++
 }
 
-setInterval(lineRandomUpdate, 1000);
